@@ -32,8 +32,6 @@ var ruteArray = [];
 ruteArray.push(rute1)
 ruteArray.push(rute2)
 
-sideprofiler = []
-sideprofilIndex = 0;
 
 // events
 svgDrawProfile.addEventListener('pointerdown', drawPointInProfile)
@@ -64,7 +62,9 @@ let displayProfile = []
 let displayProfileShadow = []
 let displayProfileFullspeed = []
 
-let fullSpeedProfile2DArray = []
+sideprofiler = []
+sideprofilerSvg = []
+sideprofilIndex = 0;
 
 const profilVogn1 = [
   [1000,1600],[1200,1600],
@@ -107,6 +107,9 @@ const sideprofil3 = [
   [1280, 720], [1480, 800],
   [1600, 1000], [1600, 1680]
 ]
+
+sideprofilRute1 = [sideprofil1, sideprofil2, sideprofil3]
+sideprofilRute2 = [sideprofil3, sideprofil2, sideprofil1]
 
 //-------------------------------------------------
 //----------Event and Functions-------------------- 
@@ -242,7 +245,7 @@ function chooseProfile(){
   }
   if(this.id == "btnUseDrawProfile"){
     if(opretProfilVognForSvg.length == 0){
-      RouteHeadlineRight.innerHTML = "profil er tom"
+      getSnackbar("Ingen tegnet profil")
     }
     else{
       displayProfil(opretProfilVognForSvg, this.id)
@@ -253,7 +256,6 @@ function chooseProfile(){
 function displayProfil(profilVogn, id){
 
   fullSpeedProfile = fullSpeed(profilVogn)
-  fullSpeedProfile2DArray = fullSpeed(profilVogn)
 
   displayProfile = profilVogn 
   displayeProfileConverted = convertProfilToSvgFormat(profilVogn)
@@ -314,11 +316,12 @@ function displayProfil(profilVogn, id){
 
 function displayNextSideprofile(){
   if(sideprofiler.length > 0){
-    if(sideprofilIndex +2 <= sideprofiler.length){
+    if(sideprofilIndex + 2 <= sideprofiler.length){
         if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
             svg.removeChild(svg.lastChild)
         }
         sideprofilIndex ++;
+        checkForCollision(sideprofilIndex)
         newProfile = drawProfile(sideprofiler[sideprofilIndex], "sideprofil")
         svg.appendChild(newProfile)
     }
@@ -327,26 +330,24 @@ function displayNextSideprofile(){
 
 function displaypreviousSideprofile(){
   if(sideprofiler.length > 0){
-    if(!(sideprofilIndex -1 == -1)){
+    if(sideprofilIndex != 0){
       if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
         svg.removeChild(svg.lastChild)
       }
       sideprofilIndex --;
-      newProfile = drawProfile(sideprofiler[sideprofilIndex], "sideprofil")
-      svg.appendChild(newProfile)
+      checkForCollision(sideprofilIndex)
+      svg.appendChild(drawProfile(sideprofiler[sideprofilIndex], "sideprofil"))
     }
   }
 }
 
 function displayFirstSideprofile(){
-  if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
-    svg.removeChild(svg.lastChild)
-  }
+  if(svg.childElementCount > 5) svg.removeChild(svg.lastChild) //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
 
-  if(sideprofiler.length > 0){
-      sideprofilIndex = 0;
-      newProfile = drawProfile(sideprofiler[0], "sideprofil")
-      svg.appendChild(newProfile)
+  if(sideprofiler.length > 0) {
+    sideprofilIndex = 0
+    checkForCollision(sideprofilIndex)
+    svg.appendChild(drawProfile(sideprofiler[0], "sideprofil"))
   }
 }
 
@@ -357,13 +358,25 @@ function displayLastSideprofile(){
 
   if(sideprofiler.length > 0){
       sideprofilIndex = sideprofiler.length -1;
-      newProfile = drawProfile(sideprofiler[sideprofiler.length -1], "sideprofil")
+      newProfile = drawProfile(sideprofilerSvg[sideprofilIndex], "sideprofil")
+
+      checkForCollision(sideprofilIndex)
+
       svg.appendChild(newProfile)
   }
 }
 
+function checkForCollision(sideprofilIndex){
+   //Se om første sideprofil rammer profil eller dens symmetriske halvside
+   halvsideprofil = convertToSymmetricProfile(displayProfile)
+   //Der er en lille fejlmargin. Hvis det er på præcis samme koordinat, så registrer den ikke. hvis sideobjekt = 900, så true på 899&901
+   isCollision(sideprofiler[sideprofilIndex], halvsideprofil);
+   //Se om første sideprofil rammer profil med fuld speed 
+   isCollision(sideprofiler[sideprofilIndex], fullSpeedProfile)
+}
+
 function isCollision(sideprofil, profil){
-  console.log("profil: " + profil)
+  //console.log("profil: " + profil)
   for(i = 0; i < profil.length; i++){
     if(i + 2 <= profil.length){
       for(a = 0; a < sideprofil.length; a++){
@@ -392,67 +405,37 @@ function isPointInPoly(a,b,c,d,p,q,r,s) {
 function chooseRoute(){
   if(svg.childElementCount > 3){ // 3 lines from start under viewbox. Vi need to add profile before we can simulate a route. 
     if(rute1.checked){
-      useRute1()
+      useRute(sideprofilRute1)
       RouteHeadlineRight.innerHTML = "Rute1"
     } else if(rute2.checked){
-      useRute2()
+      useRute(sideprofilRute2)
       RouteHeadlineRight.innerHTML = "Rute2"
     } else{
-      RouteHeadlineRight.innerHTML = "Ingen rute valgt"
+      getSnackbar("Ingen rute valgt")
     }
   }
   else{
-    RouteHeadlineRight.innerHTML = "mangler at indsætte profil"
+    getSnackbar("Mangler at indsætte profil")
   }
 }
 
-function useRute1(){
-    sideprofiler = []
-    sideprofilIndex = 0
-    sideprofiler.push(sideprofil3)
-    sideprofiler.push(sideprofil2)
-    sideprofiler.push(sideprofil1)
-    for(i in sideprofiler){
-        tal = parseInt(i)
-        sideprofiler[i] = convertProfilToSvgFormat(sideprofiler[i])
-    }
-    if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 5 elements. We need to remove wayside object(element 6) if we change new route
-      svg.removeChild(svg.lastChild)
-    }
-    newProfile = drawProfile(sideprofiler[0], "sideprofil")
-    svg.appendChild(newProfile)
-}
+function useRute(choosenSideprofiles){
+  sideprofiler = choosenSideprofiles
 
-function useRute2(){
-  newFullspeedProfile = displayProfileFullspeed.split(" ")
-  sideprofiler = []
   sideprofilIndex = 0
-   
-  sideprofiler.push(sideprofil1)
-  sideprofiler.push(sideprofil3)
-  sideprofiler.push(sideprofil2)
 
-  //Se om første sideprofil rammer profil eller dens symmetriske halvside
-  halvsideprofil = convertToSymmetricProfile(displayProfile)
-  //Der er en lille fejlmargin. Hvis det er på præcis samme koordinat, så registrer den ikke. hvis sideobjekt = 900, så true på 899&901
-  isCollision(sideprofiler[0], halvsideprofil);
-  //Se om første sideprofil rammer profil med fuld speed 
-  isCollision(sideprofiler[0], fullSpeedProfile)
+  checkForCollision(sideprofilIndex)
 
-  //Transformere sideprofiler, så de kan blive vist på svg. 
-  for(i in sideprofiler){
-      tal = parseInt(i)
-      sideprofiler[i] = convertProfilToSvgFormat(sideprofiler[i])
+  for(i in choosenSideprofiles){
+    tal = parseInt(i)
+    sideprofilerSvg[i] = convertProfilToSvgFormat(choosenSideprofiles[i])
   }
-
   if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 5 elements. We need to remove wayside object(element 6) if we change new route
     svg.removeChild(svg.lastChild)
   }
-  //viser første sideprofil
-  newProfile = drawProfile(sideprofiler[0], "sideprofil")
+  newProfile = drawProfile(choosenSideprofiles[0], "sideprofil")
   svg.appendChild(newProfile)
 }
-
 
   function convertProfilToSvgFormat(profil){
     let points = "";
