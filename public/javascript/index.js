@@ -66,16 +66,6 @@ sideprofiler = []
 sideprofilerSvg = []
 sideprofilIndex = 0;
 
-const profilVogn1 = [
-  [1000,1600],[1200,1600],
-  [1200, 1200], [1320, 1200],
-  [1320, 1080], [1200,1080],
-  [1200, 960], [800,960],
-  [800, 1080], [600, 1080],
-  [600, 1360], [800, 1360],
-  [800, 1600], [1000,1600]
-]
-
 const profilVogn = [
   [1000, 1600],[1300, 1600],
   [1300, 1300], [1400, 1300],
@@ -350,7 +340,7 @@ function displayFirstSideprofile(){
     svg.appendChild(drawProfile(sideprofiler[0], "sideprofil"))
   }
 }
-//
+
 function displayLastSideprofile(){
   if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
     svg.removeChild(svg.lastChild)
@@ -367,27 +357,30 @@ function displayLastSideprofile(){
 }
 
 function checkForCollision(sideprofilIndex){
+  document.getElementById('infoAreaStill').textContent = ""
+  document.getElementById('infoAreaFullspeed').textContent = ""
    //Se om første sideprofil rammer profil eller dens symmetriske halvside
    halvsideprofil = convertToSymmetricProfile(displayProfile)
    //Der er en lille fejlmargin. Hvis det er på præcis samme koordinat, så registrer den ikke. hvis sideobjekt = 900, så true på 899&901
-   isCollision(sideprofiler[sideprofilIndex], halvsideprofil);
+   if(isCollision(sideprofiler[sideprofilIndex], halvsideprofil)) document.getElementById('infoAreaStill').textContent = "Der er sammenstød"
    //Se om første sideprofil rammer profil med fuld speed 
-   isCollision(sideprofiler[sideprofilIndex], fullSpeedProfile)
+   if(isCollision(sideprofiler[sideprofilIndex], fullSpeedProfile)) document.getElementById('infoAreaFullspeed').textContent = "Der er sammenstød"
 }
 
 function isCollision(sideprofil, profil){
-  //console.log("profil: " + profil)
+  let isCollision = false
   for(i = 0; i < profil.length; i++){
     if(i + 2 <= profil.length){
       for(a = 0; a < sideprofil.length; a++){
         if(a +2 <= sideprofil.length){
           if(isPointInPoly(sideprofil[a][0],sideprofil[a][1], sideprofil[a+1][0], sideprofil[a+1][1], profil[i][0], profil[i][1], profil[i +1][0], profil[i+1][1])){
-            console.log("Der er sammenstød")
+            isCollision = true
           }
         }
       }
     }
   }
+  return isCollision
 }
 
 function isPointInPoly(a,b,c,d,p,q,r,s) {

@@ -66,6 +66,12 @@ section:nth-of-type(4){ /* This section doesn't have any function */
   background-color: cornflowerblue;
 }
 
+button, input[type="button"] {
+  border-radius: 10px;
+  height: 30px;
+  text-align: center;
+  font-weight: bold;
+}
 
 
 
