@@ -1,3 +1,75 @@
+/*Used to style items that infect the whole page*/
+
+body, html{
+  background-color: rgb(150, 194, 252);
+}
+
+h2{
+  text-align: center;
+}
+
+#headline {
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: 50px;
+  font-weight: 500;
+  border-bottom: solid 1px;
+}
+
+.containerMaster{
+  margin: 0;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 0.2fr 0.2fr;
+  grid-gap: 20px;
+}
+
+section {
+  width: 600px;
+  margin-bottom: 10px;
+  border: solid 1px;
+  border-color: rgb(38, 73, 139);
+  border-radius: 1%;
+}
+
+.wrapper{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
+.wrapper .box{
+  padding: 3px;
+  padding-bottom: 5px;
+  margin-right: 3%;
+}
+
+.wrapper .box input{
+  width: 100%;
+}
+
+.outerline{
+  border: solid 1px;
+  margin: 5px;
+}
+
+.input-row{
+  display: flex;
+  justify-content: space-between;
+}
+
+section:nth-of-type(4){ /* This section doesn't have any function */
+  background-color: cornflowerblue;
+}
+
+
+
+
+
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */

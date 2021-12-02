@@ -6,18 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/app.css"> <!-- snackbar styling -->
-    <script src="javascript/app.js" defer></script> <!-- HTTP methods and snackbar -->
+    <link rel="stylesheet" type="text/css" href="css/app.css"> <!-- styling for the whole app -->
+    <script src="javascript/app.js" defer></script> <!-- Methods used for the whole app -->
 
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/sectionOne.css"> <!-- styling for section one -->
+    <script src="javascript/sectionOne.js" defer></script>
+
     <script src="javascript/index.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="css/sectionTwo.css"> <!-- styling for section two -->
+
+    <link rel="stylesheet" type="text/css" href="css/sectionThree.css"> <!-- styling for section three -->
+
+    <link rel="stylesheet" type="text/css" href="css/sectionFive.css"> <!-- styling for section five -->
+
+    <link rel="stylesheet" type="text/css" href="css/sectionSix.css"> <!-- styling for section six -->
+
 
     <title>Document</title>
 </head>
 
 <body>
     <center>
-        <h1>UT TRANSPORT</h1>
+        <h1 id="headline">UT TRANSPORT</h1>
     </center>
     <div class="containerMaster">
         <section>
@@ -84,7 +95,7 @@
                             <input id="outsideDistanceFromAxelToBoogie" type="text" required>
                         </div>
                     </div>
-                    <div class="listDiv">
+                    <div class="coordinatesContainer">
                         <div id="x-axis">
                             <h4>Afstand fra vognmidte
                                 <select onchange="makeInputFields(value)" id="inputCount">
@@ -116,21 +127,38 @@
             </div>
         </section>
 
-        <section>
-            <div class="billedeprofil">
-                <h2>indsæt grafisk profil</h2>
-                <img src="images/img.png" alt="">
+        <section class="sektion 2">
+            <div class="graphicProfileOnly">
+                <h2>Profilvogn</h2>
+                <div class="svgSektion">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="mysvgProfileOnly" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
+                        <line x1="1000" y1="0" x2="1000" y2="2000" style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;"></line>
+                        <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
+                        <line x1="655" y1="1620" x2="1400" y2="1620" style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;"></line>
+                    </svg>
+                </div>
+                <div id="output">
+                    <strong id="strong">SVG Coordinates:</strong> <span id="svgX"></span> <span id="svgY"></span>
+                </div>
             </div>
         </section>
 
-        <section>
-            <div class="drawingSection">
-                <div class="billedetegneprofil">
-                    <h2> indsæt tegnebræt</h2>
-                    <img src="images/tegneprofil.png" alt="">
+        <section class="sektion 3">
+            <div>
+                <div class="graphicDrawProfile">
+                    <h2> Tegn halvsideprofil</h2>
+                    <div class="svgSektion">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="mysvgDrawProfile" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
+                            <line x1="50" y1="0" x2="50" y2="2000" style="stroke: rgb(7, 0, 0); stroke-dasharray: 30 30;"></line>
+                            <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(0, 0, 0); stroke-dasharray: 30 30;"></line>
+                        </svg>
+                    </div>
                 </div>
-                <button id="tegnBtn">tegn</button>
-                <button id="sletBtn">slet</button>
+                <div class="btnSvgDrawButtons">
+                    <button type="button" id="btnBeginDraw">start profil</button>
+                    <button type="button" id="btnEndDraw">afslut profil</button>
+                    <button type="button" id="btnErase">slet</button>
+                </div>
             </div>
         </section>
 
@@ -247,6 +275,88 @@
                 </form>
             </div>
         </section>
+
+        <section class="sektion 5">
+            <div class="headline">
+                <h1>Profilvogn</h1>
+                <h1 id="RouteHeadlineRight">ingen rute valgt</h1>
+            </div> 
+            <div class="svgSektion">
+                <svg xmlns="http://www.w3.org/2000/svg" id="mysvg" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
+                    <line x1="1000" y1="0" x2="1000" y2="2000" style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;"></line>
+                    <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
+                    <line x1="655" y1="1620" x2="1400" y2="1620" style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;" id="Har du id?"></line>
+                </svg>
+            </div>
+        </section>
+
+        <section class="sektion 6">
+            <div class="contact-right">
+                <h2>Definer transportstrækning</h2>
+                <form>
+                    <div class="outline1">
+                        <div class="outline2">
+                            <h2>objekt profiler</h2>
+                            <div class="outline3">
+                            </div>
+                        </div>
+    
+                        <div class="outline2">
+                            <h2>Restriktioner</h2>
+                        </div>
+    
+                        <div class="outline2">
+                            <div class="outline3">
+                                    <button type="button" id="btnBack1"><</button>
+                                    <button type="button" id="btnNext1">></button>
+                                    <button type="button" id="btnBackAll"><<</button>
+                                    <button type="button" id="btnNextAll">>></button>
+                            </div>
+                        </div>
+    
+                        <div class="outline2">
+                            <div>
+                                <input type="radio">
+                                <label for=""> Ingen</label>
+                            </div>
+                            <div>
+                                <input type="radio">
+                                <label for=""> Forbikøres med max 5 km/t</label>
+                            </div>
+                            <div>
+                                <input type="radio">
+                                <label for=""> Stop og rangeres</label>
+                            </div>
+                            <div>
+                                <input type="radio">
+                                <label for=""> Forbud</label>
+                            </div>
+                            <div>
+                                <input type="radio">
+                                <label for=""> Sporafstand</label>
+                            </div>
+                        </div> 
+                        <div class="testklasse">
+                            <div>
+                                <h3>Indlæs profil og rute</h3>
+                            </div>
+                            <div>
+                                <button type="button" id="btnIndlæsknap"> Indlæs demoprofil</button>
+                                <button type="button" id="btnUseDrawProfile"> Indlæs tegnede profil</button>
+                            </div>
+                            <div>
+                                <input type="radio" name="navn1" id="rute1"> Rute1
+                                <input type="radio" name="navn1" id="rute2"> Rute2
+                            </div>
+                            <div class="simulateContainer">
+                                <button type="button" id="btnSimuler">Simuler rute</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
     </div>
     <div id="snackbar">Some text some message..</div>
 </body>
