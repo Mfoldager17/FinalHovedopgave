@@ -350,7 +350,7 @@ function displayFirstSideprofile(){
     svg.appendChild(drawProfile(sideprofiler[0], "sideprofil"))
   }
 }
-
+//
 function displayLastSideprofile(){
   if(svg.childElementCount > 5){ //3 lines (children) under viewbox and 2 profiles as children = 6 elements.
     svg.removeChild(svg.lastChild)
