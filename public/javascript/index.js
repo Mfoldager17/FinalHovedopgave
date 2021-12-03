@@ -9,6 +9,7 @@ const NS = svg.getAttribute('xmlns')
 
 let btnProfil = document.getElementById('btnIndlæsknap')
 let btnUseDrawProfile = document.getElementById('btnUseDrawProfile')
+let btnDrawFromCoordinatsProfile = document.getElementById('convertTo2DArray')
 let btnSimuler = document.getElementById('btnSimuler')
 
 let rute1 = document.getElementById("rute1");
@@ -43,6 +44,7 @@ svgProfileOnly.addEventListener('pointermove', getCoordinates)
 
 btnProfil.addEventListener('click', chooseProfile)
 btnUseDrawProfile.addEventListener('click', chooseProfile)
+btnDrawFromCoordinatsProfile.addEventListener('click', chooseProfile)
 btnSimuler.addEventListener('click', chooseRoute)
 
 btnNext1.addEventListener('click', displayNextSideprofile)
@@ -104,6 +106,31 @@ sideprofilRute2 = [sideprofil3, sideprofil2, sideprofil1]
 //-------------------------------------------------
 //----------Event and Functions-------------------- 
 
+function clearAllSvgViewbox(){
+  opretProfilVogn = []
+  opretProfilVognForSvg = []
+  while(svgDrawProfile.childElementCount > 2){
+    svgDrawProfile.removeChild(svgDrawProfile.lastChild)
+  }
+
+  while(svg.childElementCount > 3 || svgProfileOnly.childElementCount > 3){
+    svgProfileOnly.removeChild(svgProfileOnly.lastChild)
+    svg.removeChild(svg.lastChild)
+  }
+}
+
+function drawTheCoordinateProfileOnDrawSvg(coordinateProfile){
+  opretProfilVogn = coordinateProfile
+
+  finaleProfile = convertProfilToSvgFormat(opretProfilVogn);
+    lineOfProfil = document.createElementNS(NS, 'polyline')
+    lineOfProfil.setAttribute("points" , finaleProfile);
+    lineOfProfil.setAttribute("stroke", "black");
+    lineOfProfil.setAttribute("fill", "none");
+    lineOfProfil.setAttribute('id', "testID")
+    svgDrawProfile.appendChild(lineOfProfil);
+}
+
 function beginDraw(){
   draw = true; 
 }   
@@ -114,6 +141,8 @@ function endDraw(){
     svgDrawProfile.removeChild(svgDrawProfile.lastChild)
     opretProfilVogn.push([0, opretProfilVogn[opretProfilVogn.length -1][1]]) //Ending the profile by adding the coordinates as the last coordinates. 
     opretProfilVognForSvg.push([0/2 + 1000, opretProfilVogn[opretProfilVogn.length -1][1]])
+    console.log(opretProfilVogn)
+    console.log(opretProfilVognForSvg)
     finaleProfile = convertProfilToSvgFormat(opretProfilVogn);
     lineOfProfil = document.createElementNS(NS, 'polyline')
     lineOfProfil.setAttribute("points" , finaleProfile);
@@ -239,7 +268,16 @@ function chooseProfile(){
     }
     else{
       displayProfil(opretProfilVognForSvg, this.id)
+      convert2DArrayToXAndYArray(opretProfilVogn)
     }
+  }
+  if(this.id == "convertTo2DArray"){
+    coordinateProfile = getProfileCoordinates() 
+    coordinateProfileSvg = getProfileCoordinatesSvg(coordinateProfile) 
+    displayProfil(coordinateProfileSvg, "btnUseDrawProfile")
+    //coordinateProfileSvg[0][0] = 0
+    //coordinateProfileSvg[coordinateProfileSvg.length -1][0] = 0
+    drawTheCoordinateProfileOnDrawSvg(coordinateProfile)
   }
 }
 
@@ -254,44 +292,17 @@ function displayProfil(profilVogn, id){
 
   for(i = 0; i < svg.childElementCount; i++){
     let child = svg.children[i]
-    if(child.id == "btnIndlæsknap"){
-  
-      newProfile1 = drawProfile(displayProfileFullspeed, "5km for stærkt")
-      newProfile2 = drawShadowProfile(displayProfileShadow, id)
+    if(child.id == "btnIndlæsknap" || child.id == "btnUseDrawProfile"){
 
-      svg.appendChild(newProfile1)
-      svg.appendChild(newProfile2)
+      displayGenerelProfileWithShadow(displayProfileFullspeed, "5km for stærkt", displayProfileShadow, id, svg, svg.children[i], i)
 
-      svg.replaceChild(newProfile1,svg.children[i-1])
-      svg.replaceChild(newProfile2,child)
+      desplayGenerelProfileNoShadow(displayProfileShadow, id, svgProfileOnly, i)
 
-      newProfile = drawShadowProfile(displayProfileShadow, id)
-
-      svgProfileOnly.appendChild(newProfile)
-
-      svgProfileOnly.replaceChild(newProfile,svgProfileOnly.children[i-1])
-
-    }
-    if(child.id == "btnUseDrawProfile"){
-
-      newProfile1 = drawProfile(displayProfileFullspeed, "5km for stærkt")
-      newProfile2 = drawShadowProfile(displayProfileShadow, id)
-
-      svg.appendChild(newProfile1)
-      svg.appendChild(newProfile2)
-
-      svg.replaceChild(newProfile1,svg.children[i-1])
-      svg.replaceChild(newProfile2,child)
-  
-      newProfile = drawShadowProfile(displayProfileShadow, id)
-
-      svgProfileOnly.appendChild(newProfile)
-
-      svgProfileOnly.replaceChild(newProfile,svgProfileOnly.children[i-1])
     }
   }
  
   if(svg.childElementCount == 3){ //3 lines (children) under viewbox. Add 2 profiles as children. 
+
     newProfile1 = drawProfile(displayProfileFullspeed, "5km for stærkt")
     newProfile2 = drawShadowProfile(displayProfileShadow, id)
 
@@ -302,6 +313,23 @@ function displayProfil(profilVogn, id){
 
     svgProfileOnly.appendChild(newProfile1)
   } 
+}
+
+function displayGenerelProfileWithShadow(fullSpeedProfile, fullSpeedProfileId, shadowProfile, shadowProfileId, svgView, child, i){
+  newProfile1 = drawProfile(fullSpeedProfile, fullSpeedProfileId)
+  newProfile2 = drawShadowProfile(shadowProfile, shadowProfileId)
+
+  svgView.appendChild(newProfile1)
+  svgView.appendChild(newProfile2)
+
+  svgView.replaceChild(newProfile1,svgView.children[i-1])
+  svgView.replaceChild(newProfile2,child)
+}
+
+function desplayGenerelProfileNoShadow(shadowProfile, shadowProfileId, svgView, i){
+  newProfile1 = drawShadowProfile(shadowProfile, shadowProfileId)
+  svgView.appendChild(newProfile1)
+  svgView.replaceChild(newProfile1,svgView.children[i-1])
 }
 
 function displayNextSideprofile(){

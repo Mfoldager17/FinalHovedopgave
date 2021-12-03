@@ -96,6 +96,7 @@ async function submit() {
 }
 submitBtn.onclick = submit;
 
+
 /**
  * Search for an utNumber, found by the value in the #searchInput field
  */
@@ -117,6 +118,8 @@ async function searchForProfile() {
                     godsLenghtInput.value = data.godsLenght
                     isDistanceFromAxleToBoogieInput.value = data.isDistanceFromAxleToBoogie
                     osDistanceFromAxleToBoogieInput.value = data.osDistanceFromAxleToBoogie
+                    console.log(data.xAxis)
+                    console.log(data.yAxis)
                     makeInputFields(data.xAxis.length)
                     fillXAndY(data.xAxis, data.yAxis)
 
@@ -212,6 +215,7 @@ function clearInputFields() {
     yAxis.innerHTML = ""
     myForm.querySelector('input[type=date]').value = ""
     submitBtn.value = "Opret"
+    clearAllSvgViewbox()
 }
 
 
@@ -220,7 +224,7 @@ function getXValues() {
 
     let inputs = xDiv.querySelectorAll('input[type=text]')
     for (var i in inputs) {
-        if (inputs[i].id != undefined && inputs[i].value.trim() != "") xArray.push(parseInt(inputs[i].value))
+        if (inputs[i].id !== undefined && inputs[i].value.trim() !== "") xArray.push(parseInt(inputs[i].value))
     }
     return xArray
 }
@@ -229,7 +233,7 @@ function getYValues() {
     let yArray = []
     let inputs = yDiv.querySelectorAll('input[type=text]')
     for (var i in inputs) {
-        if (inputs[i].id != undefined && inputs[i].value.trim() != "") yArray.push(parseInt(inputs[i].value))
+        if (inputs[i].id !== undefined && inputs[i].value.trim() != "") yArray.push(parseInt(inputs[i].value))
     }
     return yArray
 }
@@ -238,16 +242,14 @@ function fillXAndY(xArray, yArray) {
     let inputs = xDiv.querySelectorAll('input[type=text]')
     if (xArray != "") {
         for (var x in inputs) {
-            if (!xArray[x]) inputs[x].value = ""
-            else inputs[x].value = xArray[x]
+            inputs[x].value = xArray[x]
         }
     }
 
     if (yArray != "") {
         inputs = yDiv.querySelectorAll('input[type=text]')
         for (var y in inputs) {
-            if (!yArray[y]) inputs[y].value = ""
-            else inputs[y].value = yArray[y]
+            inputs[y].value = yArray[y]
         }
     }
 }
@@ -294,24 +296,35 @@ function removeOneInputField() {
     yAxis.removeChild(yinputs[yinputs.length - 1])
 }
 
-function drawCoordinates() {
+function getProfileCoordinates() {
     let xArray = getXValues()
     let yArray = getYValues()
     let coordinates = []
     for(let i = 0; i < xArray.length; i++) coordinates.push([xArray[i], yArray[i]])
-    console.log(coordinates)
     return coordinates
+}
+
+function getProfileCoordinatesSvg(halvsideprofil){
+    let newArray = []
+    for(let i = 0; i < halvsideprofil.length; i ++){
+        newArray.push([halvsideprofil[i][0]/2 + 1000, halvsideprofil[i][1]])
+    }
+    console.log(newArray)
+    return newArray
 }
 
 function convert2DArrayToXAndYArray(halvsideprofil) {
     let xArray = []
     let yArray = []
+    let accept = confirm(`Vil du overskrive de nuværende koordinater med de nye`)
+    if (accept) {
     for(let i = 0; i < halvsideprofil.length; i++) {
         xArray.push(halvsideprofil[i][0])
         yArray.push(halvsideprofil[i][1])
     }
     makeInputFields(halvsideprofil.length)
     fillXAndY(xArray, yArray)
+}
 }
 
 

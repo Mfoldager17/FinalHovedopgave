@@ -46,7 +46,6 @@ async function deLete(url) {
 
 /////////////////////////////////////////////////////
 
-var snackbar = document.getElementById("snackbar");
 
 /**
  * Used to show snackbar in the bottom of a webside
@@ -54,6 +53,8 @@ var snackbar = document.getElementById("snackbar");
  * @param {String} text is the text inside the snackbar
  */
 function getSnackbar(text) {
+
+  var snackbar = document.getElementById("snackbar");
 
   // Set the text of snackbar
   snackbar.innerHTML = text
