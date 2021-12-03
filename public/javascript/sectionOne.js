@@ -294,9 +294,24 @@ function removeOneInputField() {
     yAxis.removeChild(yinputs[yinputs.length - 1])
 }
 
+function drawCoordinates() {
+    let xArray = getXValues()
+    let yArray = getYValues()
+    let coordinates = []
+    for(let i = 0; i < xArray.length; i++) coordinates.push([xArray[i], yArray[i]])
+    return coordinates
+}
 
-
-
+function convert2DArrayToXAndYArray(halvsideprofil) {
+    let xArray = []
+    let yArray = []
+    for(let i = 0; i < halvsideprofil.length; i++) {
+        xArray.push(halvsideprofil[i][0])
+        yArray.push(halvsideprofil[i][1])
+    }
+    makeInputFields(halvsideprofil.length)
+    fillXAndY(xArray, yArray)
+}
 
 
 

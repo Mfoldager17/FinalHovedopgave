@@ -53,6 +53,11 @@
     margin-bottom: 20px;
 }
 
+#convertTo2DArray {
+    height: 30px;
+    margin-left: 360px;
+}
+
 .searchContainer {
     margin-bottom: 10px;
     margin-left: 5px;
