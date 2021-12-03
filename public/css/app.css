@@ -16,10 +16,19 @@ h2{
   border-bottom: solid 1px;
 }
 
+textarea {
+  border-radius: 10px;
+}
+
+input, select{
+  border-radius: 10px;
+  height: 20px;
+}
+
 .containerMaster{
   margin: 0;
   margin-top: 2%;
-  margin-left: 2%;
+  margin-left: 1.2%;
   margin-right: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -45,25 +54,16 @@ section {
 .wrapper .box{
   padding: 3px;
   padding-bottom: 5px;
-  margin-right: 3%;
+  margin-right: 5%;
 }
 
 .wrapper .box input{
   width: 100%;
 }
 
-.outerline{
-  border: solid 1px;
-  margin: 5px;
-}
-
 .input-row{
   display: flex;
   justify-content: space-between;
-}
-
-section:nth-of-type(4){ /* This section doesn't have any function */
-  background-color: cornflowerblue;
 }
 
 button, input[type="button"] {
@@ -103,6 +103,54 @@ button, input[type="button"] {
     animation: fadein 0.5s, fadeout 0.5s 6.5s;
   }
   
+/*
+Responsiv grid
+*/
+@media (max-width: 1900px) {
+  .containerMaster {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.2fr 0.2fr;
+  }
+  section {
+      margin-left: 10%;
+  }
+  section:nth-of-type(6), section:nth-of-type(5) {
+      margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .containerMaster {
+      grid-template-columns: 1fr;
+      grid-template-rows: 0.2fr;
+      }
+  section {
+      margin-left: 220px;
+  }
+  table {
+      margin-bottom: 50px;
+  }
+  section:nth-of-type(6) {
+      margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 1200px) {
+  #submitBtn {
+      margin-bottom: 2%;
+  }
+  section {
+      margin-left: 200px;
+  }
+
+}
+@media (max-width: 900px) {
+  section {
+      margin-left: 0px;
+  }
+
+}
+
   /* Animations to fade the snackbar in and out */
   @-webkit-keyframes fadein {
     from {bottom: 0; opacity: 0;}

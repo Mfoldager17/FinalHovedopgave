@@ -299,6 +299,7 @@ function drawCoordinates() {
     let yArray = getYValues()
     let coordinates = []
     for(let i = 0; i < xArray.length; i++) coordinates.push([xArray[i], yArray[i]])
+    console.log(coordinates)
     return coordinates
 }
 
