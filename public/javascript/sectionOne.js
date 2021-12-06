@@ -91,7 +91,8 @@ async function submit() {
             clearInputFields()
         }
     } catch (error) {
-        getSnackbar(error)
+        if(error.message == "500") getSnackbar("Du har indtastet bogstaver, hvor inputet skal være et nummer")
+        else getSnackbar(error.message)
     }
 }
 submitBtn.onclick = submit;
