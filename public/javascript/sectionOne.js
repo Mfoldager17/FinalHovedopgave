@@ -72,7 +72,6 @@ async function findByUT(utNumber) {
  */
 async function submit() {
     try {
-        console.log("her")
         var foundUTNumber
         let url = '/api/profiles'
         var profile = getProfile()
@@ -91,8 +90,7 @@ async function submit() {
             clearInputFields()
         }
     } catch (error) {
-        if(error.message == "500") getSnackbar("Du har indtastet bogstaver, hvor inputet skal være et nummer")
-        else getSnackbar(error.message)
+        getSnackbar(error)
     }
 }
 submitBtn.onclick = submit;
@@ -190,12 +188,14 @@ function stringBuilder(profile) {
 function checkForEmptyInput() {
     let myForm = document.getElementById('form')
     let dateValue = myForm.querySelector('input[type=date]').value
-    let textInputs = myForm.querySelectorAll('input[type=text]')
+    let textInputs = myForm.querySelectorAll('input')
+    
     for (var i in textInputs) {
-        if (textInputs[i].id != undefined && textInputs[i].value.trim() == "" && i <= 8) throw "Udfyld venligst alle inputfelter"
+        if (textInputs[i].id != undefined && textInputs[i].value.trim() == "" && i <= 9) throw "Udfyld venligst alle inputfelter"
         if (!dateValue) throw "Udfyld dato!"
         if (dateValue < todayDate && updating == false) throw `Dato skal være efter ${todayDate}`
     }
+
 }
 
 /**
@@ -240,7 +240,7 @@ function getYValues() {
 }
 
 function fillXAndY(xArray, yArray) {
-    let inputs = xDiv.querySelectorAll('input[type=text]')
+    let inputs = xDiv.querySelectorAll('input[type=number]')
     if (xArray != "") {
         for (var x in inputs) {
             inputs[x].value = xArray[x]
@@ -248,7 +248,7 @@ function fillXAndY(xArray, yArray) {
     }
 
     if (yArray != "") {
-        inputs = yDiv.querySelectorAll('input[type=text]')
+        inputs = yDiv.querySelectorAll('input[type=number]')
         for (var y in inputs) {
             inputs[y].value = yArray[y]
         }
@@ -268,9 +268,9 @@ function makeInputFields(antal) {
     yAxis.innerHTML = ""
     for (let i = 0; i < antal; i++) {
         let xinput = document.createElement('input')
-        xinput.type = "text"
+        xinput.type = "number"
         let yinput = document.createElement('input')
-        yinput.type = "text"
+        yinput.type = "number"
         xAxis.appendChild(xinput)
         yAxis.appendChild(yinput)
     }
@@ -278,16 +278,16 @@ function makeInputFields(antal) {
 
 function createOneInputField() {
     let xinput = document.createElement('input')
-    xinput.type = 'text'
+    xinput.type = 'number'
     let yinput = document.createElement('input')
-    yinput.type = 'text'
+    yinput.type = 'number'
     xAxis.appendChild(xinput)
     yAxis.appendChild(yinput)
 }
 
 function removeOneInputField() {
-    let xinputs = xDiv.querySelectorAll('input[type=text]')
-    let yinputs = yDiv.querySelectorAll('input[type=text]')
+    let xinputs = xDiv.querySelectorAll('input[type=number]')
+    let yinputs = yDiv.querySelectorAll('input[type=number]')
     if (xinputs.length == 1) {
         plusBtn.style.display = 'none'
         minusBtn.style.display = 'none'
