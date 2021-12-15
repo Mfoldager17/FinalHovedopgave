@@ -29,6 +29,9 @@ let btnSave = document.getElementById('btnSave')
 let svgX = document.getElementById("svgX");
 let svgY = document.getElementById("svgY");
 
+let svgXDrawProfile = document.getElementById("svgXDrawProfile");
+let svgYDrawProfile = document.getElementById("svgYDrawProfile");
+
 var ruteArray = [];
 ruteArray.push(rute1)
 ruteArray.push(rute2)
@@ -41,6 +44,7 @@ btnBeginDraw.addEventListener('click', beginDraw)
 btnEndDraw.addEventListener('click', endDraw)
 
 svgProfileOnly.addEventListener('pointermove', getCoordinates)
+svgDrawProfile.addEventListener('pointermove', getCoordinatesDrawProfile)
 
 btnProfil.addEventListener('click', chooseProfile)
 btnUseDrawProfile.addEventListener('click', chooseProfile)
@@ -215,6 +219,18 @@ svgYTextContent = isNaN(svgY.value) ? svgY.value : Math.round(svgY.value);
 svgY.textContent = "Y: " + svgYTextContent
 svgX.textContent = "X: " + svgXTextContent
 }
+
+function getCoordinatesDrawProfile(event) {
+  const svgP = svgPoint(svgDrawProfile, event.clientX, event.clientY);
+  svgX.value = svgP.x;
+  svgY.value = svgP.y; 
+  
+  svgXTextContent = isNaN(svgX.value) ? svgX.value : Math.round(svgX.value);
+  svgYTextContent = isNaN(svgY.value) ? svgY.value : Math.round(svgY.value);
+  
+  svgYDrawProfile.textContent = "Y: " + svgYTextContent
+  svgXDrawProfile.textContent = "X: " + svgXTextContent
+  }
 
 function fullSpeed(profil){
   profileBothSides = convertToSymmetricProfile(profil) //getting both sides of profile
