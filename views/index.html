@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/sectionSix.css"> <!-- styling for section six -->
 
-   
+
 
 
     <title>Document</title>
@@ -43,7 +43,8 @@
                     <input type="button" id="searchBtn" value="Søg" onclick="searchForProfile()">
                 </div>
                 <div class="clearAndDeleteContainer">
-                    <input style="display: none;" id="clearBtn" type="button" value="Clear" onclick="clearInputFields()">
+                    <input style="display: none;" id="clearBtn" type="button" value="Clear"
+                        onclick="clearInputFields()">
                     <input style="display: none;" id="deleteBtn" type="button" value="Slet" onclick="deleteProfile()">
                 </div>
                 <form id="form" action="" onsubmit="return false">
@@ -136,10 +137,14 @@
             <div class="graphicProfileOnly">
                 <h2>Profilvogn</h2>
                 <div class="svgSektion">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="mysvgProfileOnly" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
-                        <line x1="1000" y1="0" x2="1000" y2="2000" style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;"></line>
-                        <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
-                        <line x1="655" y1="1620" x2="1400" y2="1620" style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;"></line>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="mysvgProfileOnly" viewBox="0 0 2000 2000"
+                        preserveAspectRatio="xMidYmid meet">
+                        <line x1="1000" y1="0" x2="1000" y2="2000"
+                            style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;"></line>
+                        <line x1="0" y1="1680" x2="2000" y2="1680"
+                            style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
+                        <line x1="655" y1="1620" x2="1400" y2="1620"
+                            style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;"></line>
                     </svg>
                 </div>
                 <div id="output">
@@ -153,19 +158,24 @@
                 <div class="graphicDrawProfile">
                     <h2> Tegn halvsideprofil</h2>
                     <div class="svgSektion">
-                        <svg xmlns="http://www.w3.org/2000/svg" id="mysvgDrawProfile" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
-                            <line x1="50" y1="0" x2="50" y2="2000" style="stroke: rgb(7, 0, 0); stroke-dasharray: 30 30;"></line>
-                            <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(0, 0, 0); stroke-dasharray: 30 30;"></line>
+                        <svg xmlns="http://www.w3.org/2000/svg" id="mysvgDrawProfile" viewBox="0 0 2000 2000"
+                            preserveAspectRatio="xMidYmid meet">
+                            <line x1="50" y1="0" x2="50" y2="2000"
+                                style="stroke: rgb(7, 0, 0); stroke-dasharray: 30 30;"></line>
+                            <line x1="0" y1="1680" x2="2000" y2="1680"
+                                style="stroke: rgb(0, 0, 0); stroke-dasharray: 30 30;"></line>
                         </svg>
                     </div>
                 </div>
                 <div id="output">
-                    <strong id="strong">koordinater:</strong> <span id="svgXDrawProfile"></span> <span id="svgYDrawProfile"></span>
+                    <strong id="strong">koordinater:</strong> <span id="svgXDrawProfile"></span> <span
+                        id="svgYDrawProfile"></span>
                 </div>
                 <div class="btnSvgDrawButtons">
                     <button type="button" id="btnBeginDraw">Start profil</button>
                     <button type="button" id="btnEndDraw">Afslut profil</button>
                     <button type="button" id="btnErase">Fortryd</button>
+                    <button type="button" id="btnEraseAll">Slet alt</button>
                 </div>
             </div>
         </section>
@@ -288,12 +298,16 @@
             <div class="headline">
                 <h1>Profilvogn</h1>
                 <h1 id="RouteHeadlineRight">ingen rute valgt</h1>
-            </div> 
+            </div>
             <div class="svgSektion">
-                <svg xmlns="http://www.w3.org/2000/svg" id="mysvg" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYmid meet">
-                    <line x1="1000" y1="0" x2="1000" y2="2000" style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;"></line>
-                    <line x1="0" y1="1680" x2="2000" y2="1680" style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
-                    <line x1="655" y1="1620" x2="1400" y2="1620" style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;" id="Har du id?"></line>
+                <svg xmlns="http://www.w3.org/2000/svg" id="mysvg" viewBox="0 0 2000 2000"
+                    preserveAspectRatio="xMidYmid meet">
+                    <line x1="1000" y1="0" x2="1000" y2="2000" style="stroke: rgb(7, 7, 7); stroke-dasharray: 40 40;">
+                    </line>
+                    <line x1="0" y1="1680" x2="2000" y2="1680"
+                        style="stroke: rgb(20, 20, 20); stroke-dasharray: 40 40;"></line>
+                    <line x1="655" y1="1620" x2="1400" y2="1620" style="stroke: rgb(87, 8, 8); stroke-dasharray: 40 40;"
+                        id="Har du id?"></line>
                 </svg>
             </div>
             <div id="infoDiv">
@@ -314,20 +328,22 @@
                             <div class="outline3">
                             </div>
                         </div>
-    
+
                         <div class="outline2">
                             <h2>Restriktioner</h2>
                         </div>
-    
+
                         <div class="outline2">
                             <div class="outline3">
-                                    <button type="button" id="btnBack1"><</button>
-                                    <button type="button" id="btnNext1">></button>
-                                    <button type="button" id="btnBackAll"><<</button>
-                                    <button type="button" id="btnNextAll">>></button>
+                                <button type="button" id="btnBack1">
+                                    << /button>
+                                        <button type="button" id="btnNext1">></button>
+                                        <button type="button" id="btnBackAll">
+                                            <<< /button>
+                                                <button type="button" id="btnNextAll">>></button>
                             </div>
                         </div>
-    
+
                         <div class="outline2">
                             <div>
                                 <input type="radio">
@@ -349,7 +365,7 @@
                                 <input type="radio">
                                 <label for=""> Sporafstand</label>
                             </div>
-                        </div> 
+                        </div>
                         <div class="testklasse">
                             <div>
                                 <h3>Indlæs profil og rute</h3>

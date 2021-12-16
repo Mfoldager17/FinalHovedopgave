@@ -189,7 +189,7 @@ function checkForEmptyInput() {
     let myForm = document.getElementById('form')
     let dateValue = myForm.querySelector('input[type=date]').value
     let textInputs = myForm.querySelectorAll('input')
-    
+
     for (var i in textInputs) {
         if (textInputs[i].id != undefined && textInputs[i].value.trim() == "" && i <= 9) throw "Udfyld venligst alle inputfelter"
         if (!dateValue) throw "Udfyld dato!"
@@ -204,6 +204,8 @@ function checkForEmptyInput() {
 function clearInputFields() {
     let myForm = document.getElementById('form')
     let textInputs = myForm.querySelectorAll('input[type=text]')
+    let numberInputs = myForm.querySelectorAll('input[type=number]')
+    for (var a in numberInputs) numberInputs[a].value = ""
     for (var i in textInputs) {
         textInputs[i].value = ""
         utNumberInput.readOnly = false
@@ -223,7 +225,7 @@ function clearInputFields() {
 function getXValues() {
     let xArray = []
 
-    let inputs = xDiv.querySelectorAll('input[type=text]')
+    let inputs = xDiv.querySelectorAll('input[type=number]')
     for (var i in inputs) {
         if (inputs[i].id !== undefined && inputs[i].value.trim() !== "") xArray.push(parseInt(inputs[i].value))
     }
@@ -232,7 +234,7 @@ function getXValues() {
 
 function getYValues() {
     let yArray = []
-    let inputs = yDiv.querySelectorAll('input[type=text]')
+    let inputs = yDiv.querySelectorAll('input[type=number]')
     for (var i in inputs) {
         if (inputs[i].id !== undefined && inputs[i].value.trim() != "") yArray.push(parseInt(inputs[i].value))
     }
@@ -301,14 +303,14 @@ function getProfileCoordinates() {
     let xArray = getXValues()
     let yArray = getYValues()
     let coordinates = []
-    for(let i = 0; i < xArray.length; i++) coordinates.push([xArray[i], yArray[i]])
+    for (let i = 0; i < xArray.length; i++) coordinates.push([xArray[i], yArray[i]])
     return coordinates
 }
 
-function getProfileCoordinatesSvg(halvsideprofil){
+function getProfileCoordinatesSvg(halvsideprofil) {
     let newArray = []
-    for(let i = 0; i < halvsideprofil.length; i ++){
-        newArray.push([halvsideprofil[i][0]/2 + 1000, halvsideprofil[i][1]])
+    for (let i = 0; i < halvsideprofil.length; i++) {
+        newArray.push([halvsideprofil[i][0] / 2 + 1000, halvsideprofil[i][1]])
     }
     console.log(newArray)
     return newArray
@@ -319,13 +321,13 @@ function convert2DArrayToXAndYArray(halvsideprofil) {
     let yArray = []
     let accept = confirm(`Vil du overskrive de nuværende koordinater med de nye`)
     if (accept) {
-    for(let i = 0; i < halvsideprofil.length; i++) {
-        xArray.push(halvsideprofil[i][0])
-        yArray.push(halvsideprofil[i][1])
+        for (let i = 0; i < halvsideprofil.length; i++) {
+            xArray.push(halvsideprofil[i][0])
+            yArray.push(halvsideprofil[i][1])
+        }
+        makeInputFields(halvsideprofil.length)
+        fillXAndY(xArray, yArray)
     }
-    makeInputFields(halvsideprofil.length)
-    fillXAndY(xArray, yArray)
-}
 }
 
 
